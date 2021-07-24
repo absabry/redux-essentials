@@ -13,12 +13,16 @@ import styles from './Counter.module.css';
 export function Counter() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [__state, __setState] = useState({
+    incrementAmount: 10,
+    text: "Hey there, just testing to add another field besides amount"
+  });
 
-  const incrementValue = Number(incrementAmount) || 0;
+  const incrementValue = Number(__state.incrementAmount) || 0;
 
   return (
     <div>
+      <h5>{__state.text}</h5>
       <div className={styles.row}>
         <button
           className={styles.button}
@@ -40,8 +44,12 @@ export function Counter() {
         <input
           className={styles.textbox}
           aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
+          value={incrementValue}
+          onChange={(e) => __setState({
+            ...__state,
+            incrementAmount: Number(e.target.value) || 0
+          })
+          }
         />
         <button
           className={styles.button}
